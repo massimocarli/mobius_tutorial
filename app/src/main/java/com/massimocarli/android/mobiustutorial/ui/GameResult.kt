@@ -34,78 +34,23 @@
 
 package com.massimocarli.android.mobiustutorial.ui
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.mutableStateOf
-import com.massimocarli.android.mobiustutorial.R
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.concepts.ShowMenu
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
-import com.raywenderlich.android.composelab1.ui.theme.MobiusGameTheme
-import com.raywenderlich.android.raybius.mobius.CardGameMobiusController
-import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-/**
- * Main Screen
- */
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-  @Inject
-  lateinit var gameCardController: CardGameMobiusController
-
-  private var gameModel = mutableStateOf(CardGameModel())
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // Switch to AppTheme for displaying the activity
-    setTheme(R.style.AppTheme)
-    gameCardController.connect(::connectViews)
-    setContent {
-      MobiusGameTheme {
-        when (gameModel.value.screen) {
-          GameScreen.MENU -> GameMenu(gameModel.value, eventConsumer)
-          GameScreen.BOARD -> GameBoard(gameModel.value, eventConsumer)
-          GameScreen.RESULT -> GameResult(gameModel.value, eventConsumer)
-        }
-      }
+@Composable
+fun GameResult(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
+  Column {
+    Text(text = "RESULT")
+    Button(onClick = {
+      eventConsumer.accept(ShowMenu)
+    }) {
+      Text("BACK TO MENU")
     }
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    gameCardController.disconnect()
-  }
-
-  override fun onResume() {
-    super.onResume()
-    gameCardController.start()
-  }
-
-  override fun onPause() {
-    super.onPause()
-    gameCardController.stop()
-  }
-
-  lateinit var eventConsumer: Consumer<CardGameEvent>
-
-  private fun connectViews(eventConsumer: Consumer<CardGameEvent>): Connection<CardGameModel> {
-    this.eventConsumer = eventConsumer
-    return object : Connection<CardGameModel> {
-      override fun accept(model: CardGameModel) {
-        logic(eventConsumer, model)
-      }
-
-      override fun dispose() {
-      }
-    }
-  }
-
-  var logic: (Consumer<CardGameEvent>, CardGameModel) -> Unit = { _, cardModel ->
-    gameModel.value = cardModel
   }
 }

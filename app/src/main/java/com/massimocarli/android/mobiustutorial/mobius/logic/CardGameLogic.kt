@@ -34,10 +34,9 @@
 
 package com.raywenderlich.android.raybius.mobius
 
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEffect
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameModel
-import com.massimocarli.android.mobiustutorial.mobius.concepts.Increment
+import com.massimocarli.android.mobiustutorial.mobius.concepts.*
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
 import com.spotify.mobius.Next
 
 /** The logic for the CardGame app */
@@ -47,10 +46,26 @@ val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
     event: CardGameEvent
   ): Next<CardGameModel, CardGameEffect> =
     when (event) {
-      is Increment -> {
+      is StartGame -> {
         Next.next(
           model.copy(
-            state = model.state + 1
+            screen = GameScreen.BOARD
+          )
+        )
+      }
+      is ShowMenu -> {
+        Next.next(
+          model.copy(
+            screen = GameScreen.MENU
+          )
+        )
+      }
+      is Increment -> {
+        val newScreen = if (model.state > 5) GameScreen.RESULT else GameScreen.BOARD
+        Next.next(
+          model.copy(
+            state = model.state + 1,
+            screen = newScreen
           )
         )
       }

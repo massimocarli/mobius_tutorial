@@ -39,7 +39,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.massimocarli.android.mobiustutorial.mobius.concepts.Increment
 import com.spotify.mobius.functions.Consumer
 

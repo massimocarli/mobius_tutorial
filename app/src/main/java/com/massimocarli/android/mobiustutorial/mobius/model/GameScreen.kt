@@ -32,9 +32,8 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.mobius.concepts
+package com.massimocarli.android.mobiustutorial.mobius.model
 
-sealed class CardGameEvent
-object Increment : CardGameEvent()
-object StartGame : CardGameEvent()
-object ShowMenu : CardGameEvent()
+enum class GameScreen {
+  MENU, BOARD, RESULT
+}

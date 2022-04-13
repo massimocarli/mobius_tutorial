@@ -32,8 +32,25 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.mobius.concepts
+package com.massimocarli.android.mobiustutorial.ui
 
-data class CardGameModel(
-  val state: Int = 0
-)
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.concepts.StartGame
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
+import com.spotify.mobius.functions.Consumer
+
+@Composable
+fun GameMenu(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
+  Column {
+    Text(text = "MENU")
+    Button(onClick = {
+      eventConsumer.accept(StartGame)
+    }) {
+      Text("START GAME")
+    }
+  }
+}

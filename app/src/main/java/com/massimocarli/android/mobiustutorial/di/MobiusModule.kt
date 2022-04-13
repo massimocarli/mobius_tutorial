@@ -36,7 +36,7 @@ package com.massimocarli.android.mobiustutorial.di
 
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEffect
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.raywenderlich.android.raybius.mobius.*
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger

@@ -32,9 +32,10 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.mobius.concepts
+package com.massimocarli.android.mobiustutorial.mobius.model
 
-sealed class CardGameEvent
-object Increment : CardGameEvent()
-object StartGame : CardGameEvent()
-object ShowMenu : CardGameEvent()
+
+data class CardGameModel(
+  val screen: GameScreen = GameScreen.MENU,
+  val state: Int = 0
+)

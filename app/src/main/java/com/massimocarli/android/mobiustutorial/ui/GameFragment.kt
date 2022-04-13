@@ -43,7 +43,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.massimocarli.android.mobiustutorial.mobius.common.MobiusHost
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.raywenderlich.android.composelab1.ui.theme.MobiusGameTheme
 import com.spotify.mobius.functions.Consumer
 import dagger.hilt.android.AndroidEntryPoint
