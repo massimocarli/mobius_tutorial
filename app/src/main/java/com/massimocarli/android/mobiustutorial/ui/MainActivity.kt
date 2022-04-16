@@ -41,7 +41,6 @@ import androidx.compose.runtime.mutableStateOf
 import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
 import com.raywenderlich.android.composelab1.ui.theme.MobiusGameTheme
 import com.raywenderlich.android.raybius.mobius.CardGameMobiusController
 import com.spotify.mobius.Connection
@@ -67,11 +66,7 @@ class MainActivity : AppCompatActivity() {
     gameCardController.connect(::connectViews)
     setContent {
       MobiusGameTheme {
-        when (gameModel.value.screen) {
-          GameScreen.MENU -> GameMenu(gameModel.value, eventConsumer)
-          GameScreen.BOARD -> GameBoard(gameModel.value, eventConsumer)
-          GameScreen.RESULT -> GameResult(gameModel.value, eventConsumer)
-        }
+        MainScreen(gameModel.value, eventConsumer)
       }
     }
   }

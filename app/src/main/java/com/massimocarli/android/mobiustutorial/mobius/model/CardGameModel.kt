@@ -34,8 +34,20 @@
 
 package com.massimocarli.android.mobiustutorial.mobius.model
 
-
 data class CardGameModel(
   val screen: GameScreen = GameScreen.MENU,
-  val state: Int = 0
+  val state: Int = 0,
+  val visible: Boolean = false,
+  val board: MutableList<PlayingCardModel> = mutableListOf(),
+  val moves: Int = 0
+)
+
+enum class CardState {
+  HIDDEN, VISIBLE, DONE;
+}
+
+data class PlayingCardModel(
+  val cardId: Int,
+  val value: Int,
+  val state: CardState = CardState.HIDDEN
 )

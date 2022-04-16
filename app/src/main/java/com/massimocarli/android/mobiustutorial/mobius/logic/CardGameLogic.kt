@@ -36,8 +36,14 @@ package com.raywenderlich.android.raybius.mobius
 
 import com.massimocarli.android.mobiustutorial.mobius.concepts.*
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.CardState
 import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
+import com.massimocarli.android.mobiustutorial.mobius.model.PlayingCardModel
 import com.spotify.mobius.Next
+
+private fun createRandomValues() = List<PlayingCardModel>(20) {
+  PlayingCardModel(it, it / 2, CardState.HIDDEN)
+}.shuffled().toMutableList()
 
 /** The logic for the CardGame app */
 val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
@@ -46,10 +52,22 @@ val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
     event: CardGameEvent
   ): Next<CardGameModel, CardGameEffect> =
     when (event) {
-      is StartGame -> {
+      is FlipCard -> {
+        var pos = 0
+        while (model.board[pos].cardId != event.cardId) {
+          pos++
+        }
+        // Here pos has the right position.
+        val oldModel = model.board[pos]
+        val newState =
+          if (oldModel.state == CardState.HIDDEN) CardState.VISIBLE else CardState.HIDDEN
+        val newModel = oldModel.copy(
+          state = newState
+        )
+        model.board[pos] = newModel
         Next.next(
           model.copy(
-            screen = GameScreen.BOARD
+            moves = model.moves + 1
           )
         )
       }
@@ -60,12 +78,19 @@ val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
           )
         )
       }
-      is Increment -> {
-        val newScreen = if (model.state > 5) GameScreen.RESULT else GameScreen.BOARD
+      is StartGame -> {
         Next.next(
           model.copy(
-            state = model.state + 1,
-            screen = newScreen
+            screen = GameScreen.BOARD,
+            board = createRandomValues(),
+            moves = 0
+          )
+        )
+      }
+      is EndGame -> {
+        Next.next(
+          model.copy(
+            screen = GameScreen.END
           )
         )
       }

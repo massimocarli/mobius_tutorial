@@ -32,10 +32,19 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.mobius.concepts
+package com.massimocarli.android.mobiustutorial.ui
 
-sealed class CardGameEvent
-object ShowMenu : CardGameEvent()
-object StartGame : CardGameEvent()
-object EndGame : CardGameEvent()
-data class FlipCard(val cardId: Int) : CardGameEvent()
+import androidx.compose.runtime.Composable
+import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
+import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
+import com.spotify.mobius.functions.Consumer
+
+@Composable
+fun MainScreen(gameModel: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
+  when (gameModel.screen) {
+    GameScreen.MENU -> GameMenu(gameModel, eventConsumer)
+    GameScreen.BOARD -> GameBoard(gameModel, eventConsumer)
+    GameScreen.END -> GameResult(gameModel, eventConsumer)
+  }
+}

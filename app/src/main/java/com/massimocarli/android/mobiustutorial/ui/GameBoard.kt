@@ -34,23 +34,48 @@
 
 package com.massimocarli.android.mobiustutorial.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.concepts.FlipCard
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.mobius.concepts.Increment
+import com.massimocarli.android.mobiustutorial.ui.components.PlayingCard
 import com.spotify.mobius.functions.Consumer
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun GameBoard(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    Text(text = "$model")
-    Button(onClick = {
-      eventConsumer.accept(Increment)
-    }) {
-      Text("Click")
+  LazyVerticalGrid(
+    cells = GridCells.Fixed(4)
+  ) {
+    items(model.board.size) {
+      Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        PlayingCard(model = model.board[it]) { cardId ->
+          eventConsumer.accept(FlipCard(cardId))
+        }
+      }
     }
   }
+//  Column {
+//    PlayingCard(model = PlayingCardModel(1, 1)) {
+//      eventConsumer.accept(FlipCard(1))
+//    }
+//    PlayingCard(model = PlayingCardModel(2, 2)) {
+//      eventConsumer.accept(FlipCard(2))
+//    }
+//    PlayingCard(model = PlayingCardModel(3, 3)) {
+//      eventConsumer.accept(FlipCard(3))
+//    }
+//    PlayingCard(model = PlayingCardModel(4, 4)) {
+//      eventConsumer.accept(FlipCard(4))
+//    }
+//    PlayingCard(model = PlayingCardModel(5, 5)) {
+//      eventConsumer.accept(FlipCard(5))
+//    }
+//  }
 }
