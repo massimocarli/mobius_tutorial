@@ -62,10 +62,9 @@ import androidx.compose.ui.unit.sp
 import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.model.CardState
 import com.massimocarli.android.mobiustutorial.mobius.model.PlayingCardModel
-
-val BACK_COLOR = Color(36, 139, 40, 255)
-val FRONT_COLOR = Color(36, 62, 139, 255)
-val DONE_COLOR = Color(255, 235, 59, 255)
+import com.raywenderlich.android.composelab1.ui.theme.GameCardBackColor
+import com.raywenderlich.android.composelab1.ui.theme.GameCardDoneColor
+import com.raywenderlich.android.composelab1.ui.theme.GameCardFrontColor
 
 @ExperimentalMaterialApi
 @Composable
@@ -110,7 +109,7 @@ fun PlayingCard(
 fun BackCard() {
   Box(
     Modifier
-      .background(BACK_COLOR)
+      .background(GameCardBackColor)
       .fillMaxSize()
   ) {
     Image(
@@ -126,7 +125,7 @@ fun BackCard() {
 fun FrontCard(value: String) {
   Box(
     Modifier
-      .background(FRONT_COLOR)
+      .background(GameCardFrontColor)
       .fillMaxSize()
       .graphicsLayer {
         rotationY = 180f
@@ -148,7 +147,7 @@ fun FrontCard(value: String) {
 fun DoneCard() {
   Box(
     Modifier
-      .background(DONE_COLOR)
+      .background(GameCardDoneColor)
       .fillMaxSize()
       .graphicsLayer {
         rotationY = 180f

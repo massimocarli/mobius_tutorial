@@ -35,5 +35,5 @@
 package com.massimocarli.android.mobiustutorial.mobius.model
 
 enum class GameScreen {
-  MENU, BOARD, END
+  MENU, BOARD, END, CREDITS, EXIT
 }

@@ -38,4 +38,6 @@ sealed class CardGameEvent
 object ShowMenu : CardGameEvent()
 object StartGame : CardGameEvent()
 object EndGame : CardGameEvent()
+object ShowCredits : CardGameEvent()
+object BackPressed : CardGameEvent()
 data class FlipCard(val cardId: Int) : CardGameEvent()

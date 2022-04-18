@@ -32,18 +32,25 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.ui
+package com.massimocarli.android.mobiustutorial.ui.common
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
+import com.massimocarli.android.mobiustutorial.mobius.concepts.ShowMenu
 import com.spotify.mobius.functions.Consumer
 
 @Composable
-fun GameResult(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    BackToMenu(eventConsumer)
+fun BackToMenu(eventConsumer: Consumer<CardGameEvent>) =
+  GameButton(text = stringResource(R.string.menu_back)) {
+    eventConsumer.accept(ShowMenu)
   }
-}
+
+//{
+//  Button(onClick = {
+//    eventConsumer.accept(ShowMenu)
+//  }) {
+//    Text(stringResource(R.string.menu_back))
+//  }
+//}

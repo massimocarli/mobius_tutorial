@@ -32,49 +32,20 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.ui
+package com.raywenderlich.android.raybius.mobius.handlers
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.Fragment
-import com.massimocarli.android.mobiustutorial.mobius.common.MobiusHost
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.raywenderlich.android.composelab1.ui.theme.MobiusGameTheme
-import com.spotify.mobius.functions.Consumer
-import dagger.hilt.android.AndroidEntryPoint
+import android.content.Context
+import android.widget.Toast
+import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
-@AndroidEntryPoint
-class GameFragment : Fragment() {
+class UIEffectHandlerImpl @Inject constructor(
+  @ActivityContext val activityContext: Context
+) : UIEffectHandler {
 
-  private var gameModel = mutableStateOf(CardGameModel())
-
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    return ComposeView(requireContext()).apply {
-      setContent {
-        MobiusGameTheme {
-          GameBoard(gameModel.value, eventConsumer)
-        }
-      }
-    }
+  override fun handleConfirmMessage(effect: DisplayConfirmMessage) {
+    //val activity = activityContext as AppCompatActivity
+    Toast.makeText(activityContext, effect.message, Toast.LENGTH_SHORT).show()
   }
-
-  override fun onResume() {
-    super.onResume()
-    val mobiusHost = (activity as MobiusHost<CardGameModel,
-        CardGameEvent>)
-    mobiusHost.injectLogic { _, model ->
-      gameModel.value = model
-    }
-  }
-
-  val eventConsumer: Consumer<CardGameEvent>
-    get() = (activity as MainActivity).eventConsumer
 }

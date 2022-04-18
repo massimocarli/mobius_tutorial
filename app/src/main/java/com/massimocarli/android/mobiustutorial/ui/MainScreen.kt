@@ -43,8 +43,9 @@ import com.spotify.mobius.functions.Consumer
 @Composable
 fun MainScreen(gameModel: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
   when (gameModel.screen) {
-    GameScreen.MENU -> GameMenu(gameModel, eventConsumer)
+    GameScreen.MENU -> GameMenu(eventConsumer)
     GameScreen.BOARD -> GameBoard(gameModel, eventConsumer)
     GameScreen.END -> GameResult(gameModel, eventConsumer)
+    GameScreen.CREDITS -> CreditsScreen(eventConsumer)
   }
 }

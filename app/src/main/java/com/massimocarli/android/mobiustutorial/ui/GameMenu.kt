@@ -34,23 +34,52 @@
 
 package com.massimocarli.android.mobiustutorial.ui
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.concepts.ShowCredits
 import com.massimocarli.android.mobiustutorial.mobius.concepts.StartGame
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
+import com.massimocarli.android.mobiustutorial.ui.common.GameButton
 import com.spotify.mobius.functions.Consumer
 
 @Composable
-fun GameMenu(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    Text(text = "MENU")
-    Button(onClick = {
-      eventConsumer.accept(StartGame)
-    }) {
-      Text("START GAME")
+fun GameMenu(eventConsumer: Consumer<CardGameEvent>) {
+  Box(
+    modifier = Modifier
+      .fillMaxSize(),
+    contentAlignment = Alignment.Center
+  ) {
+    Column(
+    ) {
+      Image(
+        painter = painterResource(R.drawable.splash_icon),
+        contentDescription = null,
+        alignment = Alignment.TopCenter,
+        modifier = Modifier.size(80.dp, 80.dp)
+      )
+      GameButton(text = stringResource(R.string.menu_play)) {
+        eventConsumer.accept(StartGame)
+      }
+      GameButton(text = stringResource(R.string.menu_credits)) {
+        eventConsumer.accept(ShowCredits)
+      }
     }
   }
+}
+
+@Composable
+@Preview
+fun GameMenuPreview() {
+  GameMenu {}
 }

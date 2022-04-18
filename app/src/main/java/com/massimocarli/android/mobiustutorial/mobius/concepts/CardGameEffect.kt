@@ -35,3 +35,4 @@
 package com.massimocarli.android.mobiustutorial.mobius.concepts
 
 sealed interface CardGameEffect
+data class DisplayConfirmMessage(val message: String) : CardGameEffect

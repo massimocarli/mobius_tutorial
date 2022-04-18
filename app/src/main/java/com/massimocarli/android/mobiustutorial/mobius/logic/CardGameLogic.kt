@@ -41,7 +41,7 @@ import com.massimocarli.android.mobiustutorial.mobius.model.GameScreen
 import com.massimocarli.android.mobiustutorial.mobius.model.PlayingCardModel
 import com.spotify.mobius.Next
 
-private fun createRandomValues() = List<PlayingCardModel>(20) {
+private fun createRandomValues() = List(20) {
   PlayingCardModel(it, it / 2, CardState.HIDDEN)
 }.shuffled().toMutableList()
 
@@ -50,52 +50,82 @@ val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
   override fun update(
     model: CardGameModel,
     event: CardGameEvent
-  ): Next<CardGameModel, CardGameEffect> =
-    when (event) {
-      is FlipCard -> {
-        var pos = 0
-        while (model.board[pos].cardId != event.cardId) {
-          pos++
-        }
-        // Here pos has the right position.
-        val oldModel = model.board[pos]
-        val newState =
-          if (oldModel.state == CardState.HIDDEN) CardState.VISIBLE else CardState.HIDDEN
-        val newModel = oldModel.copy(
-          state = newState
-        )
-        model.board[pos] = newModel
-        Next.next(
-          model.copy(
-            moves = model.moves + 1
-          )
-        )
-      }
-      is ShowMenu -> {
-        Next.next(
-          model.copy(
-            screen = GameScreen.MENU
-          )
-        )
-      }
-      is StartGame -> {
-        Next.next(
-          model.copy(
-            screen = GameScreen.BOARD,
-            board = createRandomValues(),
-            moves = 0
-          )
-        )
-      }
-      is EndGame -> {
-        Next.next(
-          model.copy(
-            screen = GameScreen.END
-          )
-        )
-      }
-      else -> Next.noChange()
-    }
+  ): Next<CardGameModel, CardGameEffect> = when (event) {
+    is FlipCard -> handleFlipCard(model, event)
+    is ShowMenu -> handleShowMenu(model, event)
+    is StartGame -> handleStartGame(model, event)
+    is ShowCredits -> handleShowCredits(model, event)
+    is EndGame -> handleEndGame(model, event)
+    is BackPressed -> handleBack(model, event)
+    else -> Next.noChange()
+  }
 }
+
+fun handleFlipCard(model: CardGameModel, event: FlipCard): Next<CardGameModel,
+    CardGameEffect> {
+  var pos = 0
+  while (model.board[pos].cardId != event.cardId) {
+    pos++
+  }
+  // Here pos has the right position.
+  val oldModel = model.board[pos]
+  val newState =
+    if (oldModel.state == CardState.HIDDEN) CardState.VISIBLE else CardState.HIDDEN
+  val newModel = oldModel.copy(
+    state = newState
+  )
+  model.board[pos] = newModel
+  return Next.next(
+    model.copy(
+      moves = model.moves + 1
+    )
+  )
+}
+
+private fun handleShowMenu(model: CardGameModel, event: ShowMenu): Next<CardGameModel,
+    CardGameEffect> {
+  return Next.next(
+    model.copy(
+      screen = GameScreen.MENU
+    )
+  )
+}
+
+private fun handleStartGame(model: CardGameModel, event: StartGame): Next<CardGameModel,
+    CardGameEffect> {
+  return Next.next(
+    model.copy(
+      screen = GameScreen.BOARD,
+      board = createRandomValues(),
+      moves = 0
+    )
+  )
+}
+
+private fun handleShowCredits(model: CardGameModel, event: ShowCredits): Next<CardGameModel,
+    CardGameEffect> {
+  return Next.next(
+    model.copy(
+      screen = GameScreen.CREDITS,
+    )
+  )
+}
+
+private fun handleEndGame(model: CardGameModel, event: EndGame): Next<CardGameModel,
+    CardGameEffect> {
+  return Next.next(
+    model.copy(
+      screen = GameScreen.END
+    )
+  )
+}
+
+private fun handleBack(model: CardGameModel, event: BackPressed): Next<CardGameModel,
+    CardGameEffect> =
+  when (model.screen) {
+    GameScreen.BOARD -> Next.noChange()// Display Alert
+    GameScreen.MENU -> Next.noChange()// Close App
+    else -> Next.next(model.copy(screen = GameScreen.MENU))
+  }
 
 

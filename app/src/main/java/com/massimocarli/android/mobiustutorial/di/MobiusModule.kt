@@ -36,18 +36,23 @@ package com.massimocarli.android.mobiustutorial.di
 
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEffect
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
+import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.raywenderlich.android.raybius.mobius.*
+import com.raywenderlich.android.raybius.mobius.handlers.UIEffectHandler
+import com.raywenderlich.android.raybius.mobius.handlers.UIEffectHandlerImpl
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid
 import com.spotify.mobius.rx2.RxEventSources
 import com.spotify.mobius.rx2.RxMobius
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 @Module(includes = arrayOf(MobiusModule.Binders::class))
 @InstallIn(ActivityComponent::class)
@@ -57,10 +62,9 @@ class MobiusModule {
   @InstallIn(ActivityComponent::class)
   interface Binders {
 
-    /*
     @Binds
     fun bindUIEffectHandler(impl: UIEffectHandlerImpl): UIEffectHandler
-
+/*
     @Binds
     fun bindApiRequestHandler(impl: ApiRequestHandlerImpl): ApiRequestHandler
      */
@@ -71,7 +75,7 @@ class MobiusModule {
 
   @Provides
   fun provideEffectHandler(
-    //uiHandler: CardGameEffectHandler,
+    uiHandler: UIEffectHandler,
     //apiRequestHandler: ApiRequestHandler
   ): CardGameEffectHandler =
     RxMobius.subtypeEffectHandler<CardGameEffect, CardGameEvent>()
@@ -80,14 +84,14 @@ class MobiusModule {
       //.addTransformer(NavigateToDetail::class.java, uiHandler::handleNavigateToDetail)
       /*
     .addConsumer(
-      DisplayErrorMessage::class.java, uiHandler::handleErrorMessage,
-      AndroidSchedulers.mainThread()
-    )
-    .addConsumer(
       HideKeyboard::class.java, uiHandler::handleHideKeyboardMessage,
       AndroidSchedulers.mainThread()
     )
        */
+      .addConsumer(
+        DisplayConfirmMessage::class.java, uiHandler::handleConfirmMessage,
+        AndroidSchedulers.mainThread()
+      )
       .build();
 
   @Provides

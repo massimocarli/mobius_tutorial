@@ -32,18 +32,49 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.ui
+package com.massimocarli.android.mobiustutorial.ui.common
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
-import com.spotify.mobius.functions.Consumer
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.raywenderlich.android.composelab1.ui.theme.DarkGreen
+import com.raywenderlich.android.composelab1.ui.theme.Purple700
 
 @Composable
-fun GameResult(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    BackToMenu(eventConsumer)
+fun GameButton(
+  text: String,
+  onClick: () -> Unit
+) {
+  Button(
+    onClick = onClick,
+    shape = RoundedCornerShape(8.dp),
+    border = BorderStroke(2.dp, Purple700),
+    colors = ButtonDefaults.outlinedButtonColors(contentColor = DarkGreen),
+    elevation = ButtonDefaults.elevation(
+      defaultElevation = 10.dp,
+      pressedElevation = 15.dp,
+      disabledElevation = 0.dp
+    ),
+    modifier = Modifier.width(240.dp)
+  )
+  {
+    Text(text = text)
+  }
+}
+
+@Composable
+@Preview
+fun PreviewGameButton() {
+  GameButton(
+    "Button Test"
+  ) {
+    println("Clicked")
   }
 }

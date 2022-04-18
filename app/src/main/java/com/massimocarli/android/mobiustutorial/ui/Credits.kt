@@ -35,15 +35,16 @@
 package com.massimocarli.android.mobiustutorial.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
 import com.spotify.mobius.functions.Consumer
 
 @Composable
-fun GameResult(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
+fun CreditsScreen(eventConsumer: Consumer<CardGameEvent>) {
   Column {
+    Text(text = "Mobius Tutorial")
     BackToMenu(eventConsumer)
   }
 }

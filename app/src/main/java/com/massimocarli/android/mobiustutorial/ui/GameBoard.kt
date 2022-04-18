@@ -61,21 +61,4 @@ fun GameBoard(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
       }
     }
   }
-//  Column {
-//    PlayingCard(model = PlayingCardModel(1, 1)) {
-//      eventConsumer.accept(FlipCard(1))
-//    }
-//    PlayingCard(model = PlayingCardModel(2, 2)) {
-//      eventConsumer.accept(FlipCard(2))
-//    }
-//    PlayingCard(model = PlayingCardModel(3, 3)) {
-//      eventConsumer.accept(FlipCard(3))
-//    }
-//    PlayingCard(model = PlayingCardModel(4, 4)) {
-//      eventConsumer.accept(FlipCard(4))
-//    }
-//    PlayingCard(model = PlayingCardModel(5, 5)) {
-//      eventConsumer.accept(FlipCard(5))
-//    }
-//  }
 }

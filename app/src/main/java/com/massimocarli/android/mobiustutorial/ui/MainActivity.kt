@@ -39,9 +39,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import com.massimocarli.android.mobiustutorial.R
+import com.massimocarli.android.mobiustutorial.mobius.concepts.BackPressed
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.raywenderlich.android.composelab1.ui.theme.MobiusGameTheme
 import com.raywenderlich.android.raybius.mobius.CardGameMobiusController
 import com.spotify.mobius.Connection
 import com.spotify.mobius.functions.Consumer
@@ -65,9 +65,7 @@ class MainActivity : AppCompatActivity() {
     setTheme(R.style.AppTheme)
     gameCardController.connect(::connectViews)
     setContent {
-      MobiusGameTheme {
-        MainScreen(gameModel.value, eventConsumer)
-      }
+      MainScreen(gameModel.value, eventConsumer)
     }
   }
 
@@ -84,6 +82,10 @@ class MainActivity : AppCompatActivity() {
   override fun onPause() {
     super.onPause()
     gameCardController.stop()
+  }
+
+  override fun onBackPressed() {
+    eventConsumer.accept(BackPressed)
   }
 
   lateinit var eventConsumer: Consumer<CardGameEvent>

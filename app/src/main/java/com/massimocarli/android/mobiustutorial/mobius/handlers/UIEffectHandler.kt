@@ -32,18 +32,11 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.ui
+package com.raywenderlich.android.raybius.mobius.handlers
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
-import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
-import com.spotify.mobius.functions.Consumer
+import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
 
-@Composable
-fun GameResult(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    BackToMenu(eventConsumer)
-  }
+interface UIEffectHandler {
+
+  fun handleConfirmMessage(effect: DisplayConfirmMessage)
 }
