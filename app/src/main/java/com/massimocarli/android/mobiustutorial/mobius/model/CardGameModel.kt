@@ -39,7 +39,9 @@ data class CardGameModel(
   val state: Int = 0,
   val visible: Boolean = false,
   val board: MutableList<PlayingCardModel> = mutableListOf(),
-  val moves: Int = 0
+  val moves: Int = 0,
+  val uncovered: MutableList<Pair<Int, Int>> = mutableListOf(),
+  val completed: Int = 0
 )
 
 enum class CardState {

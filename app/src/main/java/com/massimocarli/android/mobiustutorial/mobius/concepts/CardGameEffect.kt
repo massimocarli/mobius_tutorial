@@ -36,3 +36,6 @@ package com.massimocarli.android.mobiustutorial.mobius.concepts
 
 sealed interface CardGameEffect
 data class DisplayConfirmMessage(val message: String) : CardGameEffect
+data class DelayedCompletedPair(val firstId: Int, val secondId: Int) : CardGameEffect
+data class DelayedWrongPair(val firstId: Int, val secondId: Int) : CardGameEffect
+object GameFinished : CardGameEffect

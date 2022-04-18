@@ -35,12 +35,17 @@
 package com.massimocarli.android.mobiustutorial.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
 import com.massimocarli.android.mobiustutorial.mobius.concepts.FlipCard
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
@@ -50,13 +55,22 @@ import com.spotify.mobius.functions.Consumer
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun GameBoard(model: CardGameModel, eventConsumer: Consumer<CardGameEvent>) {
-  LazyVerticalGrid(
-    cells = GridCells.Fixed(4)
-  ) {
-    items(model.board.size) {
-      Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        PlayingCard(model = model.board[it]) { cardId ->
-          eventConsumer.accept(FlipCard(cardId))
+  Column {
+    Text("Moves: ${model.moves}", fontSize = 30.sp)
+    Box(
+      modifier = Modifier
+        .fillMaxSize(),
+      contentAlignment = Alignment.Center
+    ) {
+      LazyVerticalGrid(
+        cells = GridCells.Fixed(4)
+      ) {
+        items(model.board.size) {
+          Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            PlayingCard(model = model.board[it]) { cardId ->
+              eventConsumer.accept(FlipCard(cardId))
+            }
+          }
         }
       }
     }

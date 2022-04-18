@@ -85,7 +85,11 @@ fun PlayingCard(
     )
   )
   Card(
-    onClick = { onClick(model.cardId) },
+    onClick = {
+      if (model.state != CardState.DONE) {
+        onClick(model.cardId)
+      }
+    },
     modifier = modifier
       .graphicsLayer {
         rotationY = rotation.value

@@ -34,9 +34,7 @@
 
 package com.massimocarli.android.mobiustutorial.di
 
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEffect
-import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
+import com.massimocarli.android.mobiustutorial.mobius.concepts.*
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.raywenderlich.android.raybius.mobius.*
 import com.raywenderlich.android.raybius.mobius.handlers.UIEffectHandler
@@ -79,6 +77,9 @@ class MobiusModule {
     //apiRequestHandler: ApiRequestHandler
   ): CardGameEffectHandler =
     RxMobius.subtypeEffectHandler<CardGameEffect, CardGameEvent>()
+      .addTransformer(DelayedCompletedPair::class.java, uiHandler::handlePairCompleted)
+      .addTransformer(DelayedWrongPair::class.java, uiHandler::handleWrongPair)
+      .addTransformer(GameFinished::class.java, uiHandler::handleGameFinished)
       //.addTransformer(SearchTvShow::class.java, apiRequestHandler::handleSearchTvShow)
       //.addTransformer(GetTvShowDetail::class.java, apiRequestHandler::handleTvShowDetail)
       //.addTransformer(NavigateToDetail::class.java, uiHandler::handleNavigateToDetail)

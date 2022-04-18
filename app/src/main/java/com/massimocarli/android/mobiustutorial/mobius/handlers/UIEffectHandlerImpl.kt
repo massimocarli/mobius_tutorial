@@ -36,8 +36,9 @@ package com.raywenderlich.android.raybius.mobius.handlers
 
 import android.content.Context
 import android.widget.Toast
-import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
+import com.massimocarli.android.mobiustutorial.mobius.concepts.*
 import dagger.hilt.android.qualifiers.ActivityContext
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class UIEffectHandlerImpl @Inject constructor(
@@ -47,5 +48,35 @@ class UIEffectHandlerImpl @Inject constructor(
   override fun handleConfirmMessage(effect: DisplayConfirmMessage) {
     //val activity = activityContext as AppCompatActivity
     Toast.makeText(activityContext, effect.message, Toast.LENGTH_SHORT).show()
+  }
+
+  override fun handlePairCompleted(request: Observable<DelayedCompletedPair>):
+      Observable<CardGameEvent> =
+    request
+      //.observeOn(AndroidSchedulers.mainThread())
+      .map { req ->
+        waitShort()
+        SetPairAsDone(req.firstId, req.secondId)
+      }
+
+  override fun handleWrongPair(request: Observable<DelayedWrongPair>): Observable<CardGameEvent> =
+    request
+      //.observeOn(AndroidSchedulers.mainThread())
+      .map { req ->
+        waitShort()
+        RestorePair(req.firstId, req.secondId)
+      }
+
+  override fun handleGameFinished(request: Observable<GameFinished>): Observable<CardGameEvent> =
+    request
+      //.observeOn(AndroidSchedulers.mainThread())
+      .map { req ->
+        waitShort()
+        EndGame
+      }
+
+  private fun waitShort() = try {
+    Thread.sleep(800)
+  } catch (ie: InterruptedException) {
   }
 }

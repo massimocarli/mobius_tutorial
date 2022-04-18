@@ -40,4 +40,14 @@ object StartGame : CardGameEvent()
 object EndGame : CardGameEvent()
 object ShowCredits : CardGameEvent()
 object BackPressed : CardGameEvent()
+data class SetPairAsDone(
+  val firstId: Int,
+  val secondId: Int
+) : CardGameEvent()
+
+data class RestorePair(
+  val firstId: Int,
+  val secondId: Int
+) : CardGameEvent()
+
 data class FlipCard(val cardId: Int) : CardGameEvent()

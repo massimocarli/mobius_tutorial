@@ -34,9 +34,22 @@
 
 package com.raywenderlich.android.raybius.mobius.handlers
 
-import com.massimocarli.android.mobiustutorial.mobius.concepts.DisplayConfirmMessage
+import com.massimocarli.android.mobiustutorial.mobius.concepts.*
+import io.reactivex.Observable
 
 interface UIEffectHandler {
 
   fun handleConfirmMessage(effect: DisplayConfirmMessage)
+
+  fun handlePairCompleted(
+    request: Observable<DelayedCompletedPair>
+  ): Observable<CardGameEvent>
+
+  fun handleWrongPair(
+    request: Observable<DelayedWrongPair>
+  ): Observable<CardGameEvent>
+
+  fun handleGameFinished(
+    request: Observable<GameFinished>
+  ): Observable<CardGameEvent>
 }
