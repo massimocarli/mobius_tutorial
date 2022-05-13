@@ -110,7 +110,9 @@ private fun handleStartGame(model: CardGameModel, event: StartGame): Next<CardGa
     model.copy(
       screen = GameScreen.BOARD,
       board = createRandomValues(),
-      moves = 0
+      moves = 0,
+      completed = 0,
+      uncovered = mutableListOf()
     )
   )
 }
