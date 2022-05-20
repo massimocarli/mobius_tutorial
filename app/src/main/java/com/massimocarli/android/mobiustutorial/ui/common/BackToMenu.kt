@@ -46,11 +46,3 @@ fun BackToMenu(eventConsumer: Consumer<CardGameEvent>) =
   GameButton(text = stringResource(R.string.menu_back)) {
     eventConsumer.accept(ShowMenu)
   }
-
-//{
-//  Button(onClick = {
-//    eventConsumer.accept(ShowMenu)
-//  }) {
-//    Text(stringResource(R.string.menu_back))
-//  }
-//}

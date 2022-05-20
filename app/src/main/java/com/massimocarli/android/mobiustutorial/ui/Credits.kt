@@ -34,17 +34,52 @@
 
 package com.massimocarli.android.mobiustutorial.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
 import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
 import com.spotify.mobius.functions.Consumer
 
 @Composable
 fun CreditsScreen(eventConsumer: Consumer<CardGameEvent>) {
-  Column {
-    Text(text = "Mobius Tutorial")
+  Column(
+    modifier = Modifier.padding(8.dp),
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Image(
+      painter = painterResource(R.drawable.splash_icon),
+      contentDescription = null,
+      alignment = Alignment.TopCenter,
+      modifier = Modifier.size(250.dp, 250.dp)
+    )
+    Text(
+      modifier = Modifier.padding(8.dp),
+      text = stringResource(R.string.credits_text),
+      fontSize = 30.sp
+    )
     BackToMenu(eventConsumer)
+  }
+}
+
+@Composable
+@Preview
+fun CreditsScreenPreview() {
+  CreditsScreen(DUMMY_CONSUMER)
+}
+
+private val DUMMY_CONSUMER = object : Consumer<CardGameEvent> {
+  override fun accept(value: CardGameEvent) {
   }
 }

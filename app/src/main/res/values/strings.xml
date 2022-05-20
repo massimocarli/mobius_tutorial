@@ -3,5 +3,6 @@
   <string name="menu_play">PLAY</string>
   <string name="menu_credits">CREDITS</string>
   <string name="menu_back">BACK TO MENU</string>
-
+  <string name="credits_text">This is a demo app that shows how Mobius works. Feel free to
+    change the code and play with it. Enjoy!</string>
 </resources>
