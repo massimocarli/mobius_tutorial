@@ -34,20 +34,11 @@
 
 package com.raywenderlich.android.raybius.mobius.handlers
 
-import android.content.Context
-import android.widget.Toast
 import com.massimocarli.android.mobiustutorial.mobius.concepts.*
-import dagger.hilt.android.qualifiers.ActivityContext
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class UIEffectHandlerImpl @Inject constructor(
-  @ActivityContext val activityContext: Context
-) : UIEffectHandler {
-
-  override fun handleConfirmMessage(effect: DisplayConfirmMessage) {
-    Toast.makeText(activityContext, effect.message, Toast.LENGTH_SHORT).show()
-  }
+class GameEffectHandlerImpl @Inject constructor() : GameEffectHandler {
 
   override fun handlePairCompleted(request: Observable<DelayedCompletedPair>):
       Observable<CardGameEvent> =

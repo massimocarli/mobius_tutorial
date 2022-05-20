@@ -32,17 +32,12 @@
  * THE SOFTWARE.
  */
 
-package com.massimocarli.android.mobiustutorial.ui.common
+package com.massimocarli.android.mobiustutorial.mobius.common
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.massimocarli.android.mobiustutorial.R
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.mobius.concepts.ShowMenu
 import com.spotify.mobius.functions.Consumer
 
-@Composable
-fun BackToMenu(eventConsumer: Consumer<CardGameEvent>) =
-  GameButton(text = stringResource(R.string.menu_back)) {
-    eventConsumer.accept(ShowMenu)
+internal val DUMMY_CONSUMER = object : Consumer<CardGameEvent> {
+  override fun accept(value: CardGameEvent) {
   }
+}

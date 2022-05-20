@@ -37,9 +37,7 @@ package com.raywenderlich.android.raybius.mobius.handlers
 import com.massimocarli.android.mobiustutorial.mobius.concepts.*
 import io.reactivex.Observable
 
-interface UIEffectHandler {
-
-  fun handleConfirmMessage(effect: DisplayConfirmMessage)
+interface GameEffectHandler {
 
   fun handlePairCompleted(
     request: Observable<DelayedCompletedPair>

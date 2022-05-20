@@ -37,8 +37,8 @@ package com.massimocarli.android.mobiustutorial.di
 import com.massimocarli.android.mobiustutorial.mobius.concepts.*
 import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.raywenderlich.android.raybius.mobius.*
-import com.raywenderlich.android.raybius.mobius.handlers.UIEffectHandler
-import com.raywenderlich.android.raybius.mobius.handlers.UIEffectHandlerImpl
+import com.raywenderlich.android.raybius.mobius.handlers.GameEffectHandler
+import com.raywenderlich.android.raybius.mobius.handlers.GameEffectHandlerImpl
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.android.AndroidLogger
 import com.spotify.mobius.android.MobiusAndroid
@@ -50,7 +50,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 @Module(includes = arrayOf(MobiusModule.Binders::class))
 @InstallIn(ActivityComponent::class)
@@ -61,11 +60,7 @@ class MobiusModule {
   interface Binders {
 
     @Binds
-    fun bindUIEffectHandler(impl: UIEffectHandlerImpl): UIEffectHandler
-/*
-    @Binds
-    fun bindApiRequestHandler(impl: ApiRequestHandlerImpl): ApiRequestHandler
-     */
+    fun bindGameEffectHandler(impl: GameEffectHandlerImpl): GameEffectHandler
   }
 
   @Provides
@@ -73,31 +68,16 @@ class MobiusModule {
 
   @Provides
   fun provideEffectHandler(
-    uiHandler: UIEffectHandler,
-    //apiRequestHandler: ApiRequestHandler
+    gameHandler: GameEffectHandler,
   ): CardGameEffectHandler =
     RxMobius.subtypeEffectHandler<CardGameEffect, CardGameEvent>()
-      .addTransformer(DelayedCompletedPair::class.java, uiHandler::handlePairCompleted)
-      .addTransformer(DelayedWrongPair::class.java, uiHandler::handleWrongPair)
-      .addTransformer(GameFinished::class.java, uiHandler::handleGameFinished)
-      //.addTransformer(SearchTvShow::class.java, apiRequestHandler::handleSearchTvShow)
-      //.addTransformer(GetTvShowDetail::class.java, apiRequestHandler::handleTvShowDetail)
-      //.addTransformer(NavigateToDetail::class.java, uiHandler::handleNavigateToDetail)
-      /*
-    .addConsumer(
-      HideKeyboard::class.java, uiHandler::handleHideKeyboardMessage,
-      AndroidSchedulers.mainThread()
-    )
-       */
-      .addConsumer(
-        DisplayConfirmMessage::class.java, uiHandler::handleConfirmMessage,
-        AndroidSchedulers.mainThread()
-      )
+      .addTransformer(DelayedCompletedPair::class.java, gameHandler::handlePairCompleted)
+      .addTransformer(DelayedWrongPair::class.java, gameHandler::handleWrongPair)
+      .addTransformer(GameFinished::class.java, gameHandler::handleGameFinished)
       .build();
 
   @Provides
   fun provideEventSource(): CardGameEventSource {
-    //val dummy: Observable<TvShowEvent> = Observable.just(StartEvent)
     val dummy: Observable<CardGameEvent> = Observable.empty()
     return RxEventSources.fromObservables(dummy);
   }

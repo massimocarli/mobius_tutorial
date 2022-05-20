@@ -40,6 +40,7 @@ import com.massimocarli.android.mobiustutorial.mobius.model.CardGameModel
 import com.spotify.mobius.EventSource
 import com.spotify.mobius.MobiusLoop
 import com.spotify.mobius.Update
+import com.spotify.mobius.functions.Consumer
 import io.reactivex.ObservableTransformer
 
 typealias CardGameMobiusLoopFactory = MobiusLoop.Factory<CardGameModel, CardGameEvent,

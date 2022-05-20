@@ -87,7 +87,6 @@ fun handleFlipCard(model: CardGameModel, event: FlipCard): Next<CardGameModel,
       effects.add(DelayedWrongPair(uncovered[0].first, uncovered[1].first))
     }
   }
-
   return Next.next(
     model.copy(
       moves = model.moves + 1
@@ -126,6 +125,13 @@ private fun handleShowCredits(model: CardGameModel, event: ShowCredits): Next<Ca
   )
 }
 
+private fun handleBack(model: CardGameModel, event: BackPressed): Next<CardGameModel,
+    CardGameEffect> =
+  when (model.screen) {
+    GameScreen.BOARD -> Next.noChange()
+    else -> Next.next(model.copy(screen = GameScreen.MENU))
+  }
+
 private fun handleEndGame(model: CardGameModel, event: EndGame): Next<CardGameModel,
     CardGameEffect> {
   return Next.next(
@@ -134,14 +140,6 @@ private fun handleEndGame(model: CardGameModel, event: EndGame): Next<CardGameMo
     )
   )
 }
-
-private fun handleBack(model: CardGameModel, event: BackPressed): Next<CardGameModel,
-    CardGameEffect> =
-  when (model.screen) {
-    GameScreen.BOARD -> Next.noChange()// Display Alert
-    GameScreen.MENU -> Next.noChange()// Close App
-    else -> Next.next(model.copy(screen = GameScreen.MENU))
-  }
 
 private fun handleSetPairAsDone(model: CardGameModel, event: SetPairAsDone): Next<CardGameModel,
     CardGameEffect> {

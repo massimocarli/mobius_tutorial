@@ -48,8 +48,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.massimocarli.android.mobiustutorial.R
+import com.massimocarli.android.mobiustutorial.mobius.common.DUMMY_CONSUMER
 import com.massimocarli.android.mobiustutorial.mobius.concepts.CardGameEvent
-import com.massimocarli.android.mobiustutorial.ui.common.BackToMenu
 import com.spotify.mobius.functions.Consumer
 
 @Composable
@@ -69,7 +69,6 @@ fun CreditsScreen(eventConsumer: Consumer<CardGameEvent>) {
       text = stringResource(R.string.credits_text),
       fontSize = 30.sp
     )
-    BackToMenu(eventConsumer)
   }
 }
 
@@ -77,9 +76,4 @@ fun CreditsScreen(eventConsumer: Consumer<CardGameEvent>) {
 @Preview
 fun CreditsScreenPreview() {
   CreditsScreen(DUMMY_CONSUMER)
-}
-
-private val DUMMY_CONSUMER = object : Consumer<CardGameEvent> {
-  override fun accept(value: CardGameEvent) {
-  }
 }
