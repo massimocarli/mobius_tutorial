@@ -46,14 +46,12 @@ class UIEffectHandlerImpl @Inject constructor(
 ) : UIEffectHandler {
 
   override fun handleConfirmMessage(effect: DisplayConfirmMessage) {
-    //val activity = activityContext as AppCompatActivity
     Toast.makeText(activityContext, effect.message, Toast.LENGTH_SHORT).show()
   }
 
   override fun handlePairCompleted(request: Observable<DelayedCompletedPair>):
       Observable<CardGameEvent> =
     request
-      //.observeOn(AndroidSchedulers.mainThread())
       .map { req ->
         waitShort()
         SetPairAsDone(req.firstId, req.secondId)
@@ -61,7 +59,6 @@ class UIEffectHandlerImpl @Inject constructor(
 
   override fun handleWrongPair(request: Observable<DelayedWrongPair>): Observable<CardGameEvent> =
     request
-      //.observeOn(AndroidSchedulers.mainThread())
       .map { req ->
         waitShort()
         RestorePair(req.firstId, req.secondId)
@@ -69,7 +66,6 @@ class UIEffectHandlerImpl @Inject constructor(
 
   override fun handleGameFinished(request: Observable<GameFinished>): Observable<CardGameEvent> =
     request
-      //.observeOn(AndroidSchedulers.mainThread())
       .map { req ->
         waitShort()
         EndGame

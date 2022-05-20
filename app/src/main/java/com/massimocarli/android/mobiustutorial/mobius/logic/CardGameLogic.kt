@@ -51,14 +51,14 @@ val cardGameLogic: CardGameUpdate = object : CardGameUpdate {
     model: CardGameModel,
     event: CardGameEvent
   ): Next<CardGameModel, CardGameEffect> = when (event) {
-    is FlipCard -> handleFlipCard(model, event)
-    is ShowMenu -> handleShowMenu(model, event)
-    is StartGame -> handleStartGame(model, event)
     is ShowCredits -> handleShowCredits(model, event)
-    is EndGame -> handleEndGame(model, event)
     is BackPressed -> handleBack(model, event)
+    is StartGame -> handleStartGame(model, event)
+    is ShowMenu -> handleShowMenu(model, event)
+    is FlipCard -> handleFlipCard(model, event)
     is SetPairAsDone -> handleSetPairAsDone(model, event)
     is RestorePair -> handleRestorePair(model, event)
+    is EndGame -> handleEndGame(model, event)
   }
 }
 

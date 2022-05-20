@@ -36,8 +36,6 @@ package com.massimocarli.android.mobiustutorial.mobius.model
 
 data class CardGameModel(
   val screen: GameScreen = GameScreen.MENU,
-  val state: Int = 0,
-  val visible: Boolean = false,
   val board: MutableList<PlayingCardModel> = mutableListOf(),
   val moves: Int = 0,
   val uncovered: MutableList<Pair<Int, Int>> = mutableListOf(),
@@ -53,3 +51,7 @@ data class PlayingCardModel(
   val value: Int,
   val state: CardState = CardState.HIDDEN
 )
+
+enum class GameScreen {
+  MENU, BOARD, END, CREDITS, EXIT
+}
